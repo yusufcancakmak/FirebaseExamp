@@ -1,6 +1,7 @@
 package com.yusufcancakmak.drugabuseapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.yusufcancakmak.drugabuseapp.models.EmployeModel
 
 class EmpAdapter(private val emplist:ArrayList<EmployeModel>):RecyclerView.Adapter<EmpAdapter.MyviewHolder>() {
 
-    var onItemClick:((EmployeModel)->Unit)? =null
+    var onClickListener:((EmployeModel)->Unit)?=null
 
     inner class MyviewHolder(val binding: EmpListItemBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -23,7 +24,9 @@ class EmpAdapter(private val emplist:ArrayList<EmployeModel>):RecyclerView.Adapt
        val currentlist=emplist[position]
 
         holder.binding.fetchtext.text=currentlist.empName.toString()
-        holder.itemView.setOnClickListener { onItemClick!!.invoke(currentlist) }
+        holder.itemView.setOnClickListener { onClickListener!!.invoke(currentlist)
+
+        }
 
 
     }
