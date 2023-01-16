@@ -14,6 +14,8 @@ class FetchingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFetchingBinding
     private lateinit var empAdapter: EmpAdapter
     private lateinit var dref:DatabaseReference
+
+    private  var position: Int?=null
     private lateinit var empList:ArrayList<EmployeModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +53,7 @@ class FetchingActivity : AppCompatActivity() {
                     val mAdapter=EmpAdapter(empList)
                     binding.rvDrugs.adapter=mAdapter
 
-                    mAdapter.onItemClick={employeModel -> showIntent() }
+                    mAdapter.onClickListener={ employeModel -> showIntent(empList.indexOf(employeModel)) }
                     binding.rvDrugs.visibility=View.VISIBLE
                     binding.LoadingData.visibility=View.GONE
 
@@ -64,8 +66,12 @@ class FetchingActivity : AppCompatActivity() {
 
         })
     }
-    private fun showIntent(){
+    private fun showIntent(position: Int){
         val intent=Intent(this,EmployeeDetailsActivity::class.java)
+        intent.putExtra("empId",empList[position].empId)
+        intent.putExtra("empName",empList[position].empName)
+        intent.putExtra("empAge",empList[position].empAge)
+        intent.putExtra("empSalary",empList[position].empSalary)
         startActivity(intent)
     }
 }
